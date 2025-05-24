@@ -7,7 +7,9 @@ import CTAButton from "../components/core/Homepage/CTAButton";
 import EditorBlock from "../components/core/Homepage/EditorBlock";
 import ProgressSection from "../components/core/Homepage/ProgressSection";
 import CodeLanguageSection from "../components/core/Homepage/CodeLanguageSection";
-
+import InstructorContainer from "../components/core/Homepage/InstructorContainer"
+import Footer from "../components/common/Footer";
+import Cards from "../components/core/Homepage/Cards"
 
 
 const Home = () => {
@@ -47,7 +49,7 @@ const Home = () => {
           </CTAButton>
         </div>
 
-        <div className="shadow-blue-200 mx-3 my-14">
+        <div className="w-8/12 h-8/12  mx-3 my-14">
           <video muted loop autoPlay>
             <source src={CoverVideo} type="video/mp4" />
           </video>
@@ -107,14 +109,16 @@ const Home = () => {
             codeColor={"text-yellow-25"}
           />
         </div>
+
+        <Cards />
       </div>
 
       {/* Section 2 */}
 
       <div className="bg-white text-black ">
         <div className="h-[333px] pattern">
-          <div className=" w-11/12 mb-16 max-w-maxContent flex flex-col items-center justify-between gap-5 mx-auto">
-            <div className="flex flex-row gap-7 mt-32 mb-24 text-white">
+          <div className=" w-11/12 mb-16  max-w-maxContent flex flex-col items-center justify-between gap-5 mx-auto">
+            <div className="flex flex-row gap-7 mt-64 mb-24 text-white">
               <CTAButton active={true} linkto={"/signUp"}>
                 <div className="flex items-center gap-3">
                   Explore Full Catalog
@@ -151,6 +155,22 @@ const Home = () => {
           <CodeLanguageSection />
         </div>
       </div>
+
+      {/* Section 3 */}
+
+      <div className="flex flex-col w-11/12 mx-auto max-w-maxContent items-center justify-between gap-8 text-white ">
+
+        <InstructorContainer />
+        <h2 className="text-center text-4xl font-semibold mt-10 ">See What People Say...</h2>
+
+
+      </div>
+
+      {/* Footer */}
+      <Footer />
+
+
+
     </div>
   );
 };

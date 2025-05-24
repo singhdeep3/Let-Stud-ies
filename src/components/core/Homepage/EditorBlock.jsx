@@ -40,7 +40,7 @@ const EditorBlock = ({
       </div>
 
       {/* Section 2 */}
-      <div className="w-[100%] h-72 flex flex-row  lg:w-[500px] py-4 ">
+      <div className="w-[100%] h-72 bg-rose-700 flex flex-row  lg:w-[500px] py-7 px-8 border border-gray-50 rounded-2xl">
         <div className=" w-[10%]  text-center flex flex-col text-red-950 font-bold font-serif">
           <p>1</p>
           <p>2</p>
