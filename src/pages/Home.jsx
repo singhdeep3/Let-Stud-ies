@@ -7,10 +7,9 @@ import CTAButton from "../components/core/Homepage/CTAButton";
 import EditorBlock from "../components/core/Homepage/EditorBlock";
 import ProgressSection from "../components/core/Homepage/ProgressSection";
 import CodeLanguageSection from "../components/core/Homepage/CodeLanguageSection";
-import InstructorContainer from "../components/core/Homepage/InstructorContainer"
+import InstructorContainer from "../components/core/Homepage/InstructorContainer";
 import Footer from "../components/common/Footer";
-import Cards from "../components/core/Homepage/Cards"
-
+import Cards from "../components/core/Homepage/Cards";
 
 const Home = () => {
   return (
@@ -49,8 +48,8 @@ const Home = () => {
           </CTAButton>
         </div>
 
-        <div className="w-8/12 h-8/12  mx-3 my-14">
-          <video muted loop autoPlay>
+        <div className="  w-8/12 h-8/12  mx-3 my-14 shadow-[0_0_15px_10px_rgba(163,234,123,0.6)]">
+          <video muted loop autoPlay className="w-full h-full ">
             <source src={CoverVideo} type="video/mp4" />
           </video>
         </div>
@@ -159,18 +158,14 @@ const Home = () => {
       {/* Section 3 */}
 
       <div className="flex flex-col w-11/12 mx-auto max-w-maxContent items-center justify-between gap-8 text-white ">
-
         <InstructorContainer />
-        <h2 className="text-center text-4xl font-semibold mt-10 ">See What People Say...</h2>
-
-
+        <h2 className="text-center text-4xl font-semibold mt-10 ">
+          See What People Say...
+        </h2>
       </div>
 
       {/* Footer */}
       <Footer />
-
-
-
     </div>
   );
 };

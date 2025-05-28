@@ -30,13 +30,15 @@ const Footer = () => {
           {/* Section 1 */}
           <div className="lg:w-[50%] flex flex-wrap flex-row justify-between lg:border-r lg:border-gray-100 pl-3 lg:pr-5 gap-3">
             <div className="w-[30%] flex flex-col gap-3 lg:w-[30%] mb-7 lg:pl-0">
-                <div  className=" h-25 w-25">
-                <img src={Logo} alt="" className=" object-contain rounded-full" />
-                </div>
-              
-              <h1 className="text-white font-semibold text-[16px]">
-                Company
-              </h1>
+              <div className=" h-25 w-25">
+                <img
+                  src={Logo}
+                  alt=""
+                  className=" object-contain rounded-full"
+                />
+              </div>
+
+              <h1 className="text-white font-semibold text-[16px]">Company</h1>
               <div className="flex flex-col gap-2">
                 {["About", "Careers", "Affiliates"].map((ele, i) => {
                   return (
@@ -50,10 +52,10 @@ const Footer = () => {
                 })}
               </div>
               <div className="flex gap-3 text-lg">
-                <FaFacebook />
-                <FaGoogle />
-                <FaTwitter />
-                <FaYoutube />
+                <FaFacebook className="cursor-pointer hover:scale-125  hover:text-blue-400 transition-all duration-200" />
+                <FaGoogle className="cursor-pointer hover:scale-125  hover:text-blue-400 transition-all duration-200" />
+                <FaTwitter className="cursor-pointer hover:scale-125  hover:text-blue-400 transition-all duration-200" />
+                <FaYoutube className="cursor-pointer hover:scale-125  hover:text-blue-400 transition-all duration-200" />
               </div>
               <div></div>
             </div>
@@ -87,9 +89,7 @@ const Footer = () => {
             </div>
 
             <div className="w-[48%] lg:w-[30%] mb-7 lg:pl-0">
-              <h1 className="text-white font-semibold text-[16px]">
-                Plans
-              </h1>
+              <h1 className="text-white font-semibold text-[16px]">Plans</h1>
 
               <div className="flex flex-col gap-2 mt-2">
                 {Plans.map((ele, index) => {
@@ -175,7 +175,9 @@ const Footer = () => {
             })}
           </div>
 
-          <div className="text-center">Made with ❤️ by Love with the help of Love © 2025 Pheonix</div>
+          <div className="text-center">
+            Made with ❤️ by Love with the help of Love © 2025 Pheonix
+          </div>
         </div>
       </div>
     </div>

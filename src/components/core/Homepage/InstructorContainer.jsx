@@ -11,7 +11,7 @@ const InstructorContainer = () => {
                 <div className="w-[30%]">
                     <img src={Teacher} alt="" className="shadow-white" />
                 </div>
-                <div className="w-[50%] flex flex-col gap-10 ml-24">
+                <div className="w-[40%] flex flex-col gap-10 ml-24">
                     <div className="w-[50%] text-4xl font-semibold">
                         Teach Others with <Highlighter text={"Your Knowledge."} />{" "}
                     </div>
