@@ -1,5 +1,6 @@
 const User = require("../models/User");
 const OTP = require("../models/OTP");
+const Profile = require("../models/Profile")
 const otpGenerator = require("otp-generator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -60,23 +61,22 @@ exports.signUp = async (req, res) => {
   try {
     // Fetch data
     const {
+      accountType,
       firstName,
       lastName,
       email,
       password,
-      confrimPassword,
-      accountType,
+      confirmPassword,
       contactNumber,
       otp,
     } = req.body;
-
     // Check if fields are missing or not?
     if (
       !firstName ||
       !lastName ||
       !email ||
       !password ||
-      !confrimPassword ||
+      !confirmPassword ||
       !otp
     ) {
       return res.status(403).json({
@@ -86,7 +86,7 @@ exports.signUp = async (req, res) => {
     }
 
     // Check password is matching or not
-    if (password !== confrimPassword) {
+    if (password !== confirmPassword) {
       return res.status(400).json({
         success: false,
         message: "Password doesn't match with confirm password.",
@@ -107,12 +107,12 @@ exports.signUp = async (req, res) => {
       .sort({ createdAt: -1 })
       .limit(1);
 
-    if (recentOtp.length == 0) {
+    if (recentOtp.length === 0) {
       return res.status(400).json({
         success: false,
         message: "OTP is not found.",
       });
-    } else if (otp !== recentOtp) {
+    } else if (otp !== recentOtp[0].otp) {
       return res.status(400).json({
         success: false,
         message: "OTP is invalid.",
@@ -136,7 +136,7 @@ exports.signUp = async (req, res) => {
       email,
       contactNumber,
       password: hashPassword,
-      accountType,
+      accountType:accountType,
         additionalDetails:profileDetails._id,
       image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`,
     });

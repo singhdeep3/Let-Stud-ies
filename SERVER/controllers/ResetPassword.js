@@ -5,10 +5,11 @@ const crypto = require("crypto");
 
 exports.resetPasswordToken = async (req, res) => {
   try {
-    const email = req.body;
+    const {email} = req.body;
 
     const user = await User.findOne({ email: email });
     if (!user) {
+      console.log("Please register first!")
       return res.json({
         success: false,
         message: "Please register first!",
@@ -18,7 +19,7 @@ exports.resetPasswordToken = async (req, res) => {
     const token = crypto.randomUUID();
 
     const updatedDetails = await User.findOneAndUpdate(
-      { email: email },
+      { email },
       {
         token: token,
         resetPasswordExpires: Date.now() + 5 * 60 * 100,
@@ -26,7 +27,7 @@ exports.resetPasswordToken = async (req, res) => {
       { new: true }
     );
 
-    const url = `http://localhost:3000/update-password/${token}`;
+    const url = `http://localhost:5173/update-password/${token}`;
 
     await mailSender(
       email,
@@ -49,9 +50,9 @@ exports.resetPasswordToken = async (req, res) => {
 
 exports.resetPassword = async (req, res) => {
   try {
-    const { password, confimPassword, token } = req.body;
+    const { password, confirmPassword, token } = req.body;
 
-    if (password !== confimPassword) {
+    if (password !== confirmPassword) {
       return res.json({
         success: false,
         message: "Password doesn't match.",

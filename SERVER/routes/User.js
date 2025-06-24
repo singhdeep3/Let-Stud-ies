@@ -14,6 +14,7 @@ const {
 const { auth } = require("../middlewares/Auth");
 
 // Authentication Routes
+
 router.post("/login", login);
 router.post("/signup", signUp);
 router.post("/sendotp", sendOTP);

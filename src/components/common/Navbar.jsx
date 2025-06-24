@@ -9,6 +9,7 @@ import { useSelector } from "react-redux";
 import { apiConnector } from "../../services/apiConnector";
 import { categories } from "../../services/api";
 import { IoIosArrowDropdownCircle } from "react-icons/io";
+import SignupForm from "../core/Auth/SignupForm";
 
 const Navbar = () => {
     const { token } = useSelector((state) => state.auth);
@@ -23,9 +24,12 @@ const Navbar = () => {
         { title: "C++", link: "/catalog/c++" },
     ]);
 
+    const [loading, setLoading] = useState(false)
+
     const fetchSublinks = async () => {
         try {
             const result = await apiConnector("GET", categories.CATEGORIES_API);
+            console.log(result)
             setSubLinks(result.data.data);
         } catch (error) {
             console.log("Could not fetched category list!");
@@ -66,24 +70,38 @@ const Navbar = () => {
                                         >
                                             <div className="absolute left-[51%] top-0 translate-y-[-20%] translate-x-[80%]  h-6 w-6 rotate-45 rounded bg-gray-700"></div>
 
-                                            {
-                                                subLinks.length ? (
-                                                    subLinks.map((subLink,idx)=>(
-                                                        <Link to={`${subLink.link}`} key={idx}>
-                                                            <p className="font-bold text-white">{subLink.title}</p>
-                                                        </Link>
-
-                                                    ))
-                                                ) : (<div></div>)
-                                            }
+                                            {loading ? (
+                                                <p className="text-center">Loading...</p>
+                                            ) : (subLinks && subLinks.length) ? (
+                                                <>
+                                                    {subLinks
+                                                        ?.filter(
+                                                            (subLink) => subLink?.courses?.length > 0
+                                                        )
+                                                        ?.map((subLink, i) => (
+                                                            <Link
+                                                                to={`/catalog/${subLink.name
+                                                                    .split(" ")
+                                                                    .join("-")
+                                                                    .toLowerCase()}`}
+                                                                className="rounded-lg bg-transparent py-4 pl-4 hover:bg-richblack-50"
+                                                                key={i}
+                                                            >
+                                                                <p>{subLink.name}</p>
+                                                            </Link>
+                                                        ))}
+                                                </>
+                                            ) : (
+                                                <p className="text-center">No Courses Found</p>
+                                            )}
                                         </div>
                                     </div>
                                 ) : (
                                     <Link to={link?.path}>
                                         <p
                                             className={`${routesMatch(link?.path)
-                                                    ? "text-yellow-400"
-                                                    : "text-white"
+                                                    ? "text-yellow-25"
+                                                    : "text-richblack-25"
                                                 }`}
                                         >
                                             {link.title}
@@ -109,7 +127,7 @@ const Navbar = () => {
                         </Link>
                     )}
                     {token == null && (
-                        <Link to={"/signup"}>
+                        <Link to={"/signup"} >
                             <button className="border border-gray-900 bg-gray-800 rounded-md px-3 py-2.5 text-white font-bold">
                                 Sign-Up
                             </button>
