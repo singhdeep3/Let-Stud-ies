@@ -1,6 +1,6 @@
-const User = require("../models/User");
+const pheonixUser = require("../models/User");
 const OTP = require("../models/OTP");
-const Profile = require("../models/Profile")
+const Profile = require("../models/Profile");
 const otpGenerator = require("otp-generator");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -13,7 +13,7 @@ exports.sendOTP = async (req, res) => {
     const { email } = req.body;
 
     // Find if user already present?
-    const checkUserPresent = await User.findOne({ email });
+    const checkUserPresent = await pheonixUser.findOne({ email });
 
     if (checkUserPresent) {
       return res.status(401).json({
@@ -94,7 +94,7 @@ exports.signUp = async (req, res) => {
     }
 
     // Check if user already exists?
-    const existingUser = await User.findOne({ email });
+    const existingUser = await pheonixUser.findOne({ email });
     if (existingUser) {
       return res.status(400).json({
         success: false,
@@ -123,21 +123,21 @@ exports.signUp = async (req, res) => {
     const hashPassword = await bcrypt.hash(password, 10);
 
     const profileDetails = await Profile.create({
-        gender:null,
-        dateOfBirth:null,
-        about:null,
-        contactNumber:null,
-    })
+      gender: null,
+      dateOfBirth: null,
+      about: null,
+      contactNumber: null,
+    });
 
     // Create entry in DB
-    const user = await User.create({
+    const user = await pheonixUser.create({
       firstName,
       lastName,
       email,
       contactNumber,
       password: hashPassword,
-      accountType:accountType,
-        additionalDetails:profileDetails._id,
+      accountType: accountType,
+      additionalDetails: profileDetails._id,
       image: `https://api.dicebear.com/5.x/initials/svg?seed=${firstName} ${lastName}`,
     });
 
@@ -147,7 +147,7 @@ exports.signUp = async (req, res) => {
       user,
     });
   } catch (error) {
-    console.log(error)
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: "User cannot be registered, please try later.",
@@ -169,7 +169,7 @@ exports.login = async (req, res) => {
     }
 
     // Check if user is a registered user.
-    const user = await User.findOne({ email });
+    const user = await pheonixUser.findOne({ email });
     if (!user) {
       return res.status(401).json({
         success: false,
@@ -179,21 +179,25 @@ exports.login = async (req, res) => {
 
     // Check that user enter a valid password
     if (await bcrypt.compare(password, user.password)) {
-      const payload = {
-        email: user.email,
-        id: user._id,
-        accountType: user.accountTYpe,
-      };
-
       //  Generate unique token for user
-      const token = jwt.sign(payload, process.env.JWT_SECRET, {
-        expiresIn: "2h",
-      });
+      const token = jwt.sign(
+        {
+          email: user.email,
+          id: user._id,
+          accountType: user.accountType,
+        },
+        process.env.JWT_SECRET,
+        {
+          expiresIn: "2h",
+        }
+      );
+
       user.token = token;
       user.password = undefined;
 
       const options = {
         expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+        httpOnly: true,
       };
 
       //  Generate cookie based on token
@@ -221,30 +225,30 @@ exports.login = async (req, res) => {
 exports.changePassword = async (req, res) => {
   try {
     // Get user data from req.user
-    const userDetails = await User.findById(req.user.id)
+    const userDetails = await pheonixUser.findById(req.user.id);
 
     // Get old password, new password, and confirm new password from req.body
-    const { oldPassword, newPassword } = req.body
+    const { oldPassword, newPassword } = req.body;
 
     // Validate old password
     const isPasswordMatch = await bcrypt.compare(
       oldPassword,
       userDetails.password
-    )
+    );
     if (!isPasswordMatch) {
       // If old password does not match, return a 401 (Unauthorized) error
       return res
         .status(401)
-        .json({ success: false, message: "The password is incorrect" })
+        .json({ success: false, message: "The password is incorrect" });
     }
 
     // Update password
-    const encryptedPassword = await bcrypt.hash(newPassword, 10)
-    const updatedUserDetails = await User.findByIdAndUpdate(
+    const encryptedPassword = await bcrypt.hash(newPassword, 10);
+    const updatedUserDetails = await pheonixUser.findByIdAndUpdate(
       req.user.id,
       { password: encryptedPassword },
       { new: true }
-    )
+    );
 
     // Send notification email
     try {
@@ -255,29 +259,29 @@ exports.changePassword = async (req, res) => {
           updatedUserDetails.email,
           `Password updated successfully for ${updatedUserDetails.firstName} ${updatedUserDetails.lastName}`
         )
-      )
-      console.log("Email sent successfully:", emailResponse.response)
+      );
+      console.log("Email sent successfully:", emailResponse.response);
     } catch (error) {
       // If there's an error sending the email, log the error and return a 500 (Internal Server Error) error
-      console.error("Error occurred while sending email:", error)
+      console.error("Error occurred while sending email:", error);
       return res.status(500).json({
         success: false,
         message: "Error occurred while sending email",
         error: error.message,
-      })
+      });
     }
 
     // Return success response
     return res
       .status(200)
-      .json({ success: true, message: "Password updated successfully" })
+      .json({ success: true, message: "Password updated successfully" });
   } catch (error) {
     // If there's an error updating the password, log the error and return a 500 (Internal Server Error) error
-    console.error("Error occurred while updating password:", error)
+    console.error("Error occurred while updating password:", error);
     return res.status(500).json({
       success: false,
       message: "Error occurred while updating password",
       error: error.message,
-    })
+    });
   }
 };

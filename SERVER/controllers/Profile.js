@@ -1,7 +1,7 @@
 const { mongoose } = require("mongoose");
 const Course = require("../models/Course");
 const Profile = require("../models/Profile");
-const User = require("../models/User");
+const pheonixUser = require("../models/User");
 const { uploadImageToCloud } = require("../utils/imageUploader");
 
 exports.updateProfile = async (req, res) => {
@@ -17,7 +17,7 @@ exports.updateProfile = async (req, res) => {
       });
     }
 
-    const userDetails = await User.findById(id);
+    const userDetails = await pheonixUser.findById(id);
     const profileId = userDetails.additionalDetails;
     const profileDetails = await Profile.findById(profileId);
 
@@ -43,7 +43,7 @@ exports.deleteAccount = async (req, res) => {
   try {
     const id = req.user.id;
     const idupdate = await mongoose.Types.ObjectId(id);
-    const userDetails = User.findById(id);
+    const userDetails = pheonixUser.findById(id);
     if (!userDetails) {
       return res.status(404).json({
         success: false,
@@ -61,7 +61,7 @@ exports.deleteAccount = async (req, res) => {
     );
     await Profile.findOneAndDelete({ _id: userDetails.additionalDetails });
 
-    await User.findOneAndDelete({ _id: id });
+    await pheonixUser.findOneAndDelete({ _id: id });
 
     return res.status(200).json({
       success: true,
@@ -77,7 +77,7 @@ exports.deleteAccount = async (req, res) => {
 
 exports.getAllUserDetails = async (req, res) => {
   try {
-    const allUserDetails = await User.find({});
+    const allUserDetails = await pheonixUser.find({});
 
     if (!allUserDetails) {
       return res.json({
@@ -101,7 +101,7 @@ exports.getAllUserDetails = async (req, res) => {
 
 exports.getEnrolledCourses = async (req, res) => {
   try {
-    const enrolledCourses = await User.find({}, { courses: true })
+    const enrolledCourses = await pheonixUser.find({}, { courses: true })
       .populate("courses")
       .exec();
 
@@ -130,7 +130,7 @@ exports.updateDisplayPicture = async (req, res) => {
     const id = req.user.id;
     const dp = req.files.displayPicture;
     const dpupload = await uploadImageToCloud(dp, process.env.FOLDER_NAME);
-    await User.findByIdAndUpdate(
+    await pheonixUser.findByIdAndUpdate(
       { id },
       { image: dpupload.secure_url },
       { new: true }

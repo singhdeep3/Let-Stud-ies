@@ -1,6 +1,5 @@
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-const User = require("../models/User");
 
 // Check Authorization
 exports.auth = async (req, res, next) => {
@@ -9,7 +8,7 @@ exports.auth = async (req, res, next) => {
     const token =
       req.cookies.token ||
       req.body.token ||
-      req.header("Authorisation").replace("Bearer", "");
+      req.header("Authorization").replace("Bearer ", "");
 
     // Check if token is present?
     if (!token) {
@@ -21,7 +20,7 @@ exports.auth = async (req, res, next) => {
 
     // Verify if token is valid or not.
     try {
-      const decode = jwt.verify(token, process.env.JWT_SECRET);
+      const decode = await jwt.verify(token, process.env.JWT_SECRET);
       console.log(decode);
       req.user = decode;
     } catch (error) {
@@ -43,7 +42,7 @@ exports.auth = async (req, res, next) => {
 
 exports.isStudent = async (req, res, next) => {
   try {
-    if (req.user.accountType !== "Student") {
+    if (req.user.accountType !== "student") {
       return res.status(401).json({
         success: false,
         message: "Protected route only for Student.",
@@ -81,7 +80,7 @@ exports.isAdmin = async (req, res, next) => {
 
 exports.isInstructor = async (req, res, next) => {
   try {
-    if (req.user.accountType !== "Instructor") {
+    if (req.user.accountType !== "instructor") {
       return res.status(401).json({
         success: false,
         message: "Protected route only for Instructor.",

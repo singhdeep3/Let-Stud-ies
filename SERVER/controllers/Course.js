@@ -1,5 +1,5 @@
 const Course = require("../models/Course");
-const User = require("../models/User");
+const pheonixUser = require("../models/User");
 const { uploadImageToCloud } = require("../utils/imageUploader");
 const Category = require("../models/Category");
 
@@ -31,7 +31,7 @@ exports.createCourse = async (req, res) => {
     }
 
     const userId = req.user.id;
-    const instructorDetails = await User.findById(userId);
+    const instructorDetails = await pheonixUser.findById(userId);
     console.log(instructorDetails);
 
     if (!instructorDetails) {
@@ -65,8 +65,8 @@ exports.createCourse = async (req, res) => {
       thumbnail: thumbnailImage.secure_url,
     });
 
-    await User.findByIdAndUpdate(
-      { userId },
+    await pheonixUser.findByIdAndUpdate(
+      userId ,
       {
         $push: {
           courses: newCourse._id,
@@ -79,8 +79,8 @@ exports.createCourse = async (req, res) => {
       { _id: categoryDetails._id },
       {
         $push: {
-          name: courseName,
-          description: courseDescription,
+          // name: courseName,
+          // description: courseDescription,
           course: newCourse._id,
         },
       },
@@ -350,7 +350,7 @@ exports.deleteCourse = async (req, res) => {
     // Unenroll students from the course
     const studentsEnrolled = course.studentsEnroled
     for (const studentId of studentsEnrolled) {
-      await User.findByIdAndUpdate(studentId, {
+      await pheonixUser.findByIdAndUpdate(studentId, {
         $pull: { courses: courseId },
       })
     }

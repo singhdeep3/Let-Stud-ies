@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { signUp } from "../../../services/operations/authAPI";
 import { sendOtp } from "../../../services/operations/authAPI";
 import { setSignupData } from "../../../slices/authSlice";
-import { ACCOUNT_TYPE } from "../../.././../SERVER/utils/constants";
+import {ACCOUNT_TYPE} from "../../../utils/constants"
 export default function SignupForm({ setIsLoggedIn }) {
   const [formData, setFormData] = useState({
     firstName: "",

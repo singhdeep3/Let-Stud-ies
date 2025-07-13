@@ -1,4 +1,4 @@
-const User = require("../models/User");
+const pheonixUser = require("../models/User");
 const mailSender = require("../utils/mailSender");
 const bcrypt = require("bcrypt");
 const crypto = require("crypto");
@@ -7,7 +7,7 @@ exports.resetPasswordToken = async (req, res) => {
   try {
     const {email} = req.body;
 
-    const user = await User.findOne({ email: email });
+    const user = await pheonixUser.findOne({ email: email });
     if (!user) {
       console.log("Please register first!")
       return res.json({
@@ -18,7 +18,7 @@ exports.resetPasswordToken = async (req, res) => {
 
     const token = crypto.randomUUID();
 
-    const updatedDetails = await User.findOneAndUpdate(
+    const updatedDetails = await pheonixUser.findOneAndUpdate(
       { email },
       {
         token: token,
@@ -59,7 +59,7 @@ exports.resetPassword = async (req, res) => {
       });
     }
 
-    const userDetails = User.findOne({ token: token });
+    const userDetails = pheonixUser.findOne({ token: token });
 
     if (!userDetails) {
       return res.json({
@@ -77,7 +77,7 @@ exports.resetPassword = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    await User.findOneAndUpdate(
+    await pheonixUser.findOneAndUpdate(
       { token: token },
       { password: hashedPassword },
       { new: true }

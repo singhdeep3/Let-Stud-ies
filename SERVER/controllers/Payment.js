@@ -1,7 +1,7 @@
 const { mongoose } = require("mongoose");
 const { instance } = require("../config/razorpay");
 const Course = require("../models/Course");
-const User = require("../models/User");
+const pheonixUser = require("../models/User");
 const mailSender = require("../utils/mailSender");
 const {
   courseEnrollmentEmail,
@@ -96,7 +96,7 @@ exports.verifySignature = async (req, res) => {
           });
         }
 
-        const enrolledStudent = await User.findOneAndUpdate(
+        const enrolledStudent = await pheonixUser.findOneAndUpdate(
           { _id: userId },
           { $push: { courses: courseId } },
           { new: true }
@@ -140,7 +140,7 @@ exports.sendPaymentSuccessEmail = async (req, res) => {
   }
 
   try {
-    const enrolledStudent = await User.findById(userId)
+    const enrolledStudent = await pheonixUser.findById(userId)
 
     await mailSender(
       enrolledStudent.email,

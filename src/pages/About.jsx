@@ -7,6 +7,7 @@ import story from "../assets/Images/story.jpg";
 import Quote from "../components/core/AboutPage/Quote";
 import ContactFormSection from "../components/core/AboutPage/ContactFormSection";
 import StatsComponent from "../components/core/AboutPage/StatsComponent";
+import Footer from "../components/common/Footer"
 const About = () => {
   return (
     <div className="mt-40 w-11/12 max-w-maxContent">
@@ -101,6 +102,7 @@ const About = () => {
 
       <StatsComponent />
       <ContactFormSection/>
+      <Footer/>
 
 
     </div>

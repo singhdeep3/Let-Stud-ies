@@ -12,7 +12,7 @@ const StatsComponent = () => {
         {
           stats.map((data,idx) => {
             return (
-              <div>
+              <div key={idx}>
                 <h1>
                   {data.count}
                 </h1>

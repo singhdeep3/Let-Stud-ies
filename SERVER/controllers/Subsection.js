@@ -1,14 +1,13 @@
-const subSection = require("../models/SubSection");
 const Section = require("../models/Section");
 const { uploadImageToCloud } = require("../utils/imageUploader");
 const SubSection = require("../models/SubSection");
 
 exports.createSubSection = async (req, res) => {
   try {
-    const { sectionId, title, timeDuration, description } = req.body;
+    const { sectionId, title, description } = req.body;
 
-    const video = req.file.videoFile;
-    if (!sectionId || !title || !timeDuration || !description || !video) {
+    const video = req.files.video;
+    if (!sectionId || !title || !description || !video) {
       return res.status(400).json({
         success: false,
         message: "All fields are required.",
@@ -20,9 +19,9 @@ exports.createSubSection = async (req, res) => {
       process.env.FOLDER_NAME
     );
 
-    const subSectionDetails = await subSection.create({
+    const subSectionDetails = await SubSection.create({
       title: title,
-      timeDuration: timeDuration,
+      timeDuration: `${uploadDetails.duration}`,
       description: description,
       videoUrl: uploadDetails.secure_url,
     });
@@ -35,16 +34,16 @@ exports.createSubSection = async (req, res) => {
         },
       },
       { new: true }
-    );
+    ).populate("subSection");
 
-    return res.json(200).json({
+    return res.status(200).json({
       success: true,
       message: "Sub Section is created.",
-      updatedSection,
+      data:updatedSection,
     });
   } catch (error) {
     console.log(error);
-    return res.json(500).json({
+    return res.status(500).json({
       success: false,
       message: "Sub Section is not created, try again later.",
     });
@@ -53,9 +52,8 @@ exports.createSubSection = async (req, res) => {
 
 exports.updateSubSection = async (req, res) => {
   try {
-    const { sectionId, title, description } = req.body;
-    const subSection = await SubSection.findById(sectionId);
-
+    const { sectionId,subSectionId, title, description } = req.body;
+    const subSection = await SubSection.findById(subSectionId);
     if (!sectionId) {
       return res.status(400).json({
         success: false,
@@ -70,7 +68,7 @@ exports.updateSubSection = async (req, res) => {
       subSection.description = description;
     }
     if (req.files && req.files.video !== undefined) {
-      const video = req.file.videoFile;
+      const video = req.files.video;
       const uploadDetails = await uploadImageToCloud(
         video,
         process.env.FOLDER_NAME
@@ -79,15 +77,17 @@ exports.updateSubSection = async (req, res) => {
       subSection.timeDuration = `${uploadDetails.duration}`;
     }
     await subSection.save();
-
-    return res.json(200).json({
+    const updatedSection = await Section.findById(sectionId).populate(
+      "subSection"
+    );
+    return res.status(200).json({
       success: true,
       message: "Sub Section is updated.",
-      updatedSection,
+      data:updatedSection,
     });
   } catch (error) {
     console.log(error);
-    return res.json(500).json({
+    return res.status(500).json({
       success: false,
       message: "Sub Section is not updated, try again later.",
     });
@@ -97,7 +97,7 @@ exports.updateSubSection = async (req, res) => {
 exports.deleteSubSection = async (req, res) => {
   try {
     const { subSectionId } = req.params;
-    await subSection.findByIdAndDelete(subSectionId);
+    await SubSection.findByIdAndDelete(subSectionId);
 
     const updatedSection = await Section.findByIdAndUpdate(
       { _id: subSectionId },
@@ -108,13 +108,14 @@ exports.deleteSubSection = async (req, res) => {
       },
       { new: true }
     );
-    return res.json(200).json({
+    return res.status(200).json({
       success: true,
       message: "Sub-Section deleted succesfully.",
+      data:updatedSection
     });
   } catch (error) {
     console.log(error);
-    return res.json(500).json({
+    return res.status(500).json({
       success: false,
       message: "Sub-Section is not deleted.",
     });

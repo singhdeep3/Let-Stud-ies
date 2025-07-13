@@ -3,7 +3,7 @@ const ratingAndReviewsSchema = new mongoose.Schema({
   user: {
     type: mongoose.Schema.Types.ObjectId,
     required: true,
-    ref: "User",
+    ref: "pheonixUser",
   },
   course: {
     type: mongoose.Schema.Types.ObjectId,
