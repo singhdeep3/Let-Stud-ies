@@ -5,10 +5,8 @@ require("dotenv").config();
 exports.auth = async (req, res, next) => {
   try {
     // Extract the token
-    const token =
-      req.cookies.token ||
-      req.body.token ||
-      req.header("Authorization").replace("Bearer ", "");
+    const token = req.header("Authorization").replace("Bearer ", "") || req.cookies.token ||  req.body.token ;
+
 
     // Check if token is present?
     if (!token) {
@@ -20,7 +18,7 @@ exports.auth = async (req, res, next) => {
 
     // Verify if token is valid or not.
     try {
-      const decode = await jwt.verify(token, process.env.JWT_SECRET);
+      const decode =  jwt.verify(token, process.env.JWT_SECRET);
       console.log(decode);
       req.user = decode;
     } catch (error) {
@@ -33,7 +31,7 @@ exports.auth = async (req, res, next) => {
   } catch (error) {
     return res.status(401).json({
       success: false,
-      message: "Something went wrong!",
+      message: "Something went wrong!!!",
     });
   }
 };

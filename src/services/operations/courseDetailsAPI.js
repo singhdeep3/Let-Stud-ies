@@ -56,6 +56,8 @@ export const fetchCourseDetails = async (courseId) => {
       throw new Error(response.data.message)
     }
     result = response.data
+
+    console.log("Inside CourseDetailAPI printinf result ", result)
   } catch (error) {
     console.log("COURSE_DETAILS_API API ERROR............", error)
     result = error.response.data
@@ -265,6 +267,7 @@ export const deleteSubSection = async (data, token) => {
 export const fetchInstructorCourses = async (token) => {
   let result = []
   const toastId = toast.loading("Loading...")
+  console.log(token)
   try {
     const response = await apiConnector(
       "GET",

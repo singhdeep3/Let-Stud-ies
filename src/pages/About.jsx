@@ -10,38 +10,41 @@ import StatsComponent from "../components/core/AboutPage/StatsComponent";
 import Footer from "../components/common/Footer"
 const About = () => {
   return (
-    <div className="mt-40 w-11/12 max-w-maxContent">
-      <section>
-        <div>
-          <header>
+    <div className="mt-40 w-full max-w-maxContent">
+      <section className="bg-slate-600">
+        <div className="relative mx-auto flex w-11/12 max-w-maxContent flex-col justify-between gap-10 text-center text-white">
+          <header className="mx-auto py-20 text-4xl font-semibold lg:w-[70%]">
             Shaping tomorrow with transformative{" "}
             <Highlighter text={"online education"}></Highlighter>
-            <p>
+            <p className="mx-auto mt-3 text-center text-base font-medium text-white lg:w-[95%]">
               Driving innovation in online education, we’re creating smarter,
               more accessible learning experiences that empower individuals and
               shape a brighter, more connected future for all.
             </p>
           </header>
-          <div className="flex gap-x-4 mx-auto">
+          <div className="sm:h-[70px] lg:h-[150px]">
+          <div className="absolute bottom-0 left-[50%] grid w-[100%] translate-x-[-50%] translate-y-[30%] grid-cols-3 gap-3 lg:gap-5">
             <img src={aboutImg1} className="h-72" alt="Image" />
             <img src={aboutImg2} className="h-72 " alt="Image" />
             <img src={aboutImg3} className="h-72" alt="Image" />
           </div>
+          </div>
         </div>
       </section>
 
-      <section>
-        <div>
+      <section className="border-b border-gray-800">
+        <div className="mx-auto flex w-11/12 max-w-maxContent flex-col justify-between gap-10 font-bold text-3xl text-black">
+        <div className="h-[100px] "></div>
           <Quote />
         </div>
       </section>
 
       <section>
-        <div className="flex flex-col">
-          <div className="flex">
-            <div>
-              <h1>Our Story</h1>
-              <p>
+        <div className="mx-auto flex w-11/12 max-w-maxContent flex-col justify-between gap-10 text-blue-950">
+          <div className="flex flex-col items-center gap-10 lg:flex-row justify-between">
+            <div className="my-24 flex lg:w-[50%] flex-col gap-10">
+              <h1 className="bg-gradient-to-br from-[#833AB4] via-[#1f1717] to-[#f5cb0e] bg-clip-text text-4xl font-semibold text-transparent lg:w-[70%] ">Our Story</h1>
+              <p className="text-base font-bold text-red-950 lg:w-[95%]">
                 Our story began with a simple belief: quality education should
                 be accessible to everyone, everywhere. Fueled by passion and
                 purpose, we created a platform that delivers expert-led courses
@@ -49,7 +52,7 @@ const About = () => {
                 backgrounds. Today, we continue to innovate, connect, and
                 inspire—building a smarter future through online education.
               </p>
-              <p>
+              <p className="text-base font-bold text-gray-950 lg:w-[95%]">
                 We started with students in mind—real people looking for
                 flexible, affordable ways to learn and grow. From comprehensive
                 courses to trusted study resources, our platform is built to
@@ -59,14 +62,14 @@ const About = () => {
               </p>
             </div>
             <div>
-              <img src={story} />
+              <img src={story} className="h-80 shadow-[0_0_20px_0] shadow-[#FC6767]" />
             </div>
           </div>
 
-          <div className="flex">
-            <div>
-              <h1>Our Vision</h1>
-              <p>
+          <div className="flex flex-col items-center lg:gap-10 lg:flex-row justify-between">
+            <div className="my-24 flex lg:w-[40%] flex-col gap-10">
+              <h1 className="bg-gradient-to-b from-[#FF512F] to-[#F09819] bg-clip-text text-4xl font-semibold text-transparent lg:w-[70%] ">Our Vision</h1>
+              <p className="text-base font-bold  text-gray-950 lg:w-[95%]">
                 Our vision is rooted in the belief that education is the most
                 powerful tool for transforming lives. We aspire to build a
                 global community of learners where no one is left behind. By
@@ -81,9 +84,9 @@ const About = () => {
               </p>
             </div>
 
-            <div>
-              <h1>Our Mission</h1>
-              <p>
+            <div className="my-24 flex lg:w-[40%] flex-col gap-10">
+              <h1 className="bg-gradient-to-b from-[#1FA2FF] via-[#12D8FA] to-[#A6FFCB] text-transparent bg-clip-text text-4xl font-semibold lg:w-[70%] ">Our Mission</h1>
+              <p className="text-base font-bold text-red-950 lg:w-[95%]">
                 Our mission is to democratize education by bringing quality
                 learning to every corner of the world. We are building a
                 platform that supports learners at all stages of life—whether
@@ -101,8 +104,14 @@ const About = () => {
       </section>
 
       <StatsComponent />
-      <ContactFormSection/>
-      <Footer/>
+      <section className="mx-auto mt-20 flex w-11/12 max-w-maxContent flex-col justify-between gap-10 text-white">
+        <ContactFormSection />
+      </section>
+      <div className="relative mx-auto my-20 flex w-11/12 max-w-maxContent flex-col items-center justify-between gap-8 bg-slate-600 text-white">
+        
+      <Footer />
+    </div>
+
 
 
     </div>

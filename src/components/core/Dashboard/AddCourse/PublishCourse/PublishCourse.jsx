@@ -76,7 +76,7 @@ const PublishCourse = () => {
           >
             Back
           </button>
-          <IconBtn disabled={loading} text={"Save Changes?"} />
+          <IconBtn  disabled={loading} text={"Save Changes?"} />
         </div>
       </form>
     </div>

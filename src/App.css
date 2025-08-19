@@ -21,3 +21,15 @@ html,body{
 .toggle{
     @apply  bg-slate-900 rounded-full ;
   }
+  
+  .blackButton {
+    @apply cursor-pointer rounded-md bg-gray-700 px-[20px] py-[8px] font-semibold text-black;
+  }
+
+  .section_heading {
+    @apply text-2xl font-bold text-black lg:text-4xl;
+  }
+
+  .lable-style {
+    @apply text-[14px] text-black;
+  }

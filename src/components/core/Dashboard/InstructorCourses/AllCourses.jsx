@@ -1,23 +1,32 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Table, Tbody, Td, Thead, Tr } from "react-super-responsive-table";
+import { Table, Tbody, Td, Thead, Tr,Th } from "react-super-responsive-table";
 import { COURSE_STATUS } from "../../../../utils/constants";
 import { useNavigate } from "react-router-dom";
 import Confirmation from "../../../common/Confirmation";
+import {
+  deleteCourse,
+  fetchInstructorCourses,
+} from "../../../../services/operations/courseDetailsAPI";
+import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
 
 const AllCourses = ({ courses, setCourses }) => {
   const dispatch = useDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const { token } = useSelector((state) => state.auth);
   const [loading, setLoading] = useState(false);
   const [confirmationModal, setConfirmationModal] = useState(null);
 
-  const handleCourseDelete = async()=>{
-
-  }
+  const handleCourseDelete = async (courseId) => {
+    setLoading(true);
+    await deleteCourse({ courseId: courseId }, token);
+    const result = await fetchInstructorCourses(token);
+    if (result) setCourses(result);
+    setConfirmationModal(null);
+    setLoading(null);
+  };
   return (
     <div>
-      <table>
         <Table>
           <Thead>
             <Tr>
@@ -33,7 +42,7 @@ const AllCourses = ({ courses, setCourses }) => {
                 <Td>No Courses Found :-(</Td>
               </Tr>
             ) : (
-              courses?.map((course) => {
+              courses?.map((course) => (
                 <Tr key={course._id} className="flex gap-x-10 p-8">
                   <Td>
                     <img
@@ -55,31 +64,42 @@ const AllCourses = ({ courses, setCourses }) => {
                   <Td>2hr 30min</Td>
                   <Td>{course.price}</Td>
                   <Td>
-                    <button disabled={loading} onClick={()=>{
-                      // navigate
-                    }}>EDIT</button>
-                    <button disabled={loading} onClick={()=>{
-                      setConfirmationModal({
-                        text1:"Do you really want to delete this course?",
-                        text2:"This course content will also be deleted with this operation.",
-                        btn1Text:"Delete",
-                        btn2Text:"Cancel",
-                        btn1Handler:!loading?()=>handleCourseDelete(course._id):()=>{},
-                        btn2Handler:!loading?()=>setConfirmationModal(null):()=>{},
-                      })
-                    }}>
+                    <button
+                      disabled={loading}
+                      onClick={() => {
+                        navigate(`/dashboard/edit-course/${course._id}`);
+                      }}
+                      className="mr-8"
+                    >
+                      EDIT
+                    </button>
+                    <button
+                      disabled={loading}
+                      onClick={() => {
+                        setConfirmationModal({
+                          text1: "Do you really want to delete this course?",
+                          text2:
+                            "This course content will also be deleted with this operation.",
+                          btn1Text: "Delete",
+                          btn2Text: "Cancel",
+                          btn1Handler: !loading
+                            ? () => handleCourseDelete(course._id)
+                            : () => {},
+                          btn2Handler: !loading
+                            ? () => setConfirmationModal(null)
+                            : () => {},
+                        });
+                      }}
+                    >
                       DELETE
                     </button>
                   </Td>
-                </Tr>;
-              })
+                </Tr>
+              ))
             )}
           </Tbody>
         </Table>
-      </table>
-      {
-        confirmationModal && <Confirmation/>
-      }
+      {confirmationModal && <Confirmation modalData={confirmationModal} />}
     </div>
   );
 };

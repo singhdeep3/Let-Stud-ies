@@ -17,7 +17,7 @@ const MyCourses = () => {
     fetchCourses();
   }, []);
   return <div>
-    <div>
+    <div className="flex justify-between">
         <h1>MY COURSES</h1>
         <IconBtn text={"Add Courses"} onClick={()=>navigate("/dashboard/add-course")}/>
     </div>

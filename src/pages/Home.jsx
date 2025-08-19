@@ -10,6 +10,7 @@ import CodeLanguageSection from "../components/core/Homepage/CodeLanguageSection
 import InstructorContainer from "../components/core/Homepage/InstructorContainer";
 import Footer from "../components/common/Footer";
 import Cards from "../components/core/Homepage/Cards";
+import ReviewSlider from "../components/common/ReviewSlider";
 
 const Home = () => {
   return (
@@ -162,6 +163,7 @@ const Home = () => {
         <h2 className="text-center text-4xl font-semibold mt-10 ">
           See What People Say...
         </h2>
+        <ReviewSlider/>
       </div>
 
       {/* Footer */}

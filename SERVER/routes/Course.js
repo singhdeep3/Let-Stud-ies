@@ -59,7 +59,7 @@ router.post("/editCourse", auth, isInstructor, editCourse)
 router.get("/getInstructorCourses", auth, isInstructor, getInstructorCourses)
 router.post("/createCategory", auth, isAdmin, createCategory);
 router.get("/getAllCategories", getAllCategories);
-router.post("/getCategoryPageDetails", categoryPageDetails);
+router.post("/CategoryPageDetails", categoryPageDetails);
 router.delete("/deleteCourse", deleteCourse)
 router.post("/updateCourseProgress", auth, isStudent, updateCourseProgress);
 
