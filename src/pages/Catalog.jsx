@@ -89,7 +89,7 @@ const Catalog = () => {
                 } cursor-pointer`}
                 onClick={() => setActive(1)}
               >
-                Most Populer
+                Most Popular
               </p>
               <p
                 className={`px-4 py-2 ${
@@ -103,8 +103,9 @@ const Catalog = () => {
               </p>
             </div>
             <div>
+              {console.log(catalogPageData)}
               <CourseSlider
-                Courses={catalogPageData?.data?.selectedCategory?.courses}
+                courses={catalogPageData?.data?.selectedCategory?.courses}
               />
             </div>
           </div>
@@ -115,7 +116,7 @@ const Catalog = () => {
             </div>
             <div className="py-8">
               <CourseSlider
-                Courses={catalogPageData?.data?.differentCategory?.courses}
+                courses={catalogPageData?.data?.differentCategory?.courses}
               />
             </div>
           </div>

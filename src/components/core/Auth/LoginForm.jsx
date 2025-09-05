@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
 import { Link, useNavigate } from "react-router-dom";
 import {login} from "../../../services/operations/authAPI"
-export default function LoginForm({ setIsLoggedIn }) {
+export default function LoginForm() {
   const [formData, setFormData] = useState({
     email: "",
     password: "",

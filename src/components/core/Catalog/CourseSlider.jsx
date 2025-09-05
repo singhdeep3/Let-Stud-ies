@@ -9,7 +9,10 @@ import Course_Card from "./Course_Card";
 const CourseSlider = ({ courses }) => {
   return (
     <div>
-      {courses?.length ? (
+      {console.log(courses)}
+      {
+        
+      courses?.length ? (
         <Swiper
           // loop
           spaceBetween={150}

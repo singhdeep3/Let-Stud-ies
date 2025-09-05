@@ -37,15 +37,13 @@ exports.createRating = async (req, res) => {
       user: userId,
     });
 
-    await Course.findByIdAndUpdate(
-      courseId,
+    await Course.findByIdAndUpdate({_id:courseId},
       {
-        $push: {
-          ratingAndReviews: ratingReview._id,
-        },
+          $push: {
+              ratingAndReviews: ratingReview._id,
+          }
       },
-      { new: true }
-    );
+      {new: true});
 
     return res.status(200).json({
       success: true,
@@ -77,6 +75,7 @@ exports.getAverageRating = async (req, res) => {
         },
       },
     ]);
+    console.log("Average rating is",result[0].averageRating)
 
     if (result.length > 0) {
       return res.status(200).json({

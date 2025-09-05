@@ -10,8 +10,8 @@ export default function MyProfile() {
   const navigate = useNavigate()
 
   return (
-    <>
-      <h1 className="mb-14 text-3xl font-medium text-black">
+    <div className="ml-56">
+      <h1 className="mb-14 mt-4 text-3xl font-medium text-black text-center">
         My Profile
       </h1>
       <div className="flex items-center justify-between rounded-md border-[1px] border-slate-950 bg-slate-300 p-8 px-12">
@@ -117,6 +117,6 @@ export default function MyProfile() {
           </div>
         </div>
       </div>
-    </>
+    </div>
   )
 }

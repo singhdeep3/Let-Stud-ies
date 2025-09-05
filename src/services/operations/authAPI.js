@@ -99,8 +99,9 @@ export function login(email, password, navigate) {
         throw new Error(response.data.message);
       }
 
-      toast.success("Login Successful");
+      
       dispatch(setToken(response.data.token));
+      toast.success("Login Successful");
       const userImage = response.data?.user?.image
         ? response.data.user.image
         : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.user.firstName} ${response.data.user.lastName}`;
@@ -112,6 +113,7 @@ export function login(email, password, navigate) {
     } catch (error) {
       console.log("LOGIN API ERROR............", error);
       toast.error("Login Failed");
+      navigate("/login");
     }
     dispatch(setLoading(false));
     toast.dismiss(toastId);

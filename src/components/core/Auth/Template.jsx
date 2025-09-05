@@ -8,7 +8,6 @@ export default function Template({
   desc2,
   image,
   formtype,
-  setIsLoggedIn,
 }) {
   return (
     <div className="flex w-11/12 max-w-[1160px] py-12 mx-auto justify-between gap-y-0">
@@ -23,9 +22,9 @@ export default function Template({
         </p>
 
         {formtype == "signup" ? (
-          <SignupForm setIsLoggedIn={setIsLoggedIn} />
+          <SignupForm  />
         ) : (
-          <LoginForm setIsLoggedIn={setIsLoggedIn} />
+          <LoginForm />
         )}
 
         <div className="flex w-full items-center my-4 gap-x-2">

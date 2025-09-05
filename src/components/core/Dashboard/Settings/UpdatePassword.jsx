@@ -32,8 +32,8 @@ export default function UpdatePassword() {
   return (
     <>
       <form onSubmit={handleSubmit(submitPasswordForm)}>
-        <div className="my-10 flex flex-col gap-y-6 rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-8 px-12">
-          <h2 className="text-lg font-semibold text-richblack-5">Password</h2>
+        <div className="my-10 flex flex-col gap-y-6 rounded-md border-[1px] border-amber-700 bg-slate-400 p-8 px-12">
+          <h2 className="text-lg font-semibold text-black">Password</h2>
           <div className="flex flex-col gap-5 lg:flex-row">
             <div className="relative flex flex-col gap-2 lg:w-[48%]">
               <label htmlFor="oldPassword" className="lable-style">
@@ -52,9 +52,9 @@ export default function UpdatePassword() {
                 className="absolute right-3 top-[38px] z-[10] cursor-pointer"
               >
                 {showOldPassword ? (
-                  <AiOutlineEyeInvisible fontSize={24} fill="#AFB2BF" />
+                  <AiOutlineEyeInvisible fontSize={24} fill="#FFFFFF" />
                 ) : (
-                  <AiOutlineEye fontSize={24} fill="#AFB2BF" />
+                  <AiOutlineEye fontSize={24} fill="#FFFFFF" />
                 )}
               </span>
               {errors.oldPassword && (
@@ -80,9 +80,9 @@ export default function UpdatePassword() {
                 className="absolute right-3 top-[38px] z-[10] cursor-pointer"
               >
                 {showNewPassword ? (
-                  <AiOutlineEyeInvisible fontSize={24} fill="#AFB2BF" />
+                  <AiOutlineEyeInvisible fontSize={24} fill="#FFFFFF" />
                 ) : (
-                  <AiOutlineEye fontSize={24} fill="#AFB2BF" />
+                  <AiOutlineEye fontSize={24} fill="#FFFFFF" />
                 )}
               </span>
               {errors.newPassword && (
@@ -98,11 +98,14 @@ export default function UpdatePassword() {
             onClick={() => {
               navigate("/dashboard/my-profile")
             }}
-            className="cursor-pointer rounded-md bg-richblack-700 py-2 px-5 font-semibold text-richblack-50"
+            className="cursor-pointer rounded-md border border-black bg-red-500 py-2 px-5 font-semibold text-black"
           >
             Cancel
           </button>
+          <div className="border border-black bg-amber-500 p-2.5 rounded-2xl">
           <IconBtn type="submit" text="Update" />
+          </div>
+          
         </div>
       </form>
     </>

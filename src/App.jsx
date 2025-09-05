@@ -38,11 +38,11 @@ function App() {
         <Route path="courses/:courseId" element={<CourseDetails />} />
         <Route
           path="/login"
-          element={<Login setIsLoggedIn={setIsLoggedIn} />}
+          element={<Login />}
         />
         <Route
           path="/signup"
-          element={<Signup setIsLoggedIn={setIsLoggedIn} />}
+          element={<Signup/>}
         />
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path="/update-password/:id" element={<UpdatePassword />} />
