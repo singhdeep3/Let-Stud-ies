@@ -7,10 +7,11 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
+.env
 node_modules
 /SERVER/.env
-.env
 dist
+/src/utils/firebase.js
 dist-ssr
 *.local
 
